@@ -941,6 +941,7 @@ namespace BAMCIS.PrestoClient
 
             while (Counter < maxRetries)
             {
+                // 307リダイレクトでAuthorizationが消えて認証エラーになる
                 response = await client.SendAsync(request, cancellationToken);
 
                 switch (response.StatusCode)
