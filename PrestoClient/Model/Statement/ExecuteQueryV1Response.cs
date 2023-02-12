@@ -172,6 +172,31 @@ namespace BAMCIS.PrestoClient.Model.Statement
             }
         }
 
+        public IEnumerable<string> DataToTsv()
+        {
+            if (this.Data != null)
+            {
+                foreach (var Item in this.Data)
+                {
+                    StringBuilder SB = new StringBuilder();
+
+                    foreach (var Column in Item)
+                    {
+                        SB.Append($"\"{Column}\"\t");
+                    }
+
+                    // Remove last comma
+                    SB.Length = SB.Length - 1;
+
+                    yield return SB.ToString();
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("Data", "The data in this query result is null.");
+            }
+        }
+
         #endregion
     }
 }
