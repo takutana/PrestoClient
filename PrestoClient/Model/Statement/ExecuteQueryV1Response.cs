@@ -1,6 +1,7 @@
 ﻿using BAMCIS.PrestoClient.Model.Client;
 using BAMCIS.PrestoClient.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,10 +186,41 @@ namespace BAMCIS.PrestoClient.Model.Statement
                         SB.Append($"\"{Column}\"\t");
                     }
 
-                    // Remove last comma
+                    // Remove last tab
                     SB.Length = SB.Length - 1;
 
                     yield return SB.ToString();
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("Data", "The data in this query result is null.");
+            }
+        }
+
+        public IEnumerable<JArray> DataToJArray()
+        {
+            if (this.Data != null)
+            {
+                foreach (List<dynamic> Row in Data)
+                {
+                    var ret = new JArray();
+
+                    int Counter = 0;
+                    foreach (dynamic Column in Row)
+                    {
+                        Column Col = this.Columns[Counter++];
+                        object Value = null;
+
+                        if (Column != null)
+                        {
+                            Value = PrestoTypeMapping.Convert(Column.ToString(), Col.TypeSignature.RawType);
+                        }
+
+                        ret.Add(Value);
+                    }
+
+                    yield return ret;
                 }
             }
             else
