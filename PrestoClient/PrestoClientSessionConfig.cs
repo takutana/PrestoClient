@@ -155,7 +155,7 @@ namespace BAMCIS.PrestoClient
         /// <summary>
         /// This will always default to "0" representing UTC
         /// </summary>
-        public TimeZoneKey TimeZone { get; }
+        public TimeZoneKey TimeZone { get; set; }
 
         /// <summary>
         /// Defaults to CurrentCulture
