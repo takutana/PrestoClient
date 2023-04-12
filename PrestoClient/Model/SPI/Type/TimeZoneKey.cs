@@ -15,9 +15,11 @@ namespace BAMCIS.PrestoClient.Model.SPI.Type
         #region Private Fields
 
         public static readonly TimeZoneKey UTC_KEY = new TimeZoneKey("UTC", 0);
+        public static readonly TimeZoneKey JST_KEY = new TimeZoneKey("Asia/Tokyo", 1);
 
         private static readonly HashSet<TimeZoneKey> TIME_ZONE_KEYS = new HashSet<TimeZoneKey>() {
-           UTC_KEY
+           UTC_KEY,
+           JST_KEY,
         };
 
         #endregion
